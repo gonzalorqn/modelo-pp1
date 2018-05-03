@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1525359673 source:c:\users\alumno\desktop\modelo pp1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Usuarios.h"
+
+1525358788 c:\users\alumno\desktop\modelo pp1\usuarios.h
+	"Productos.h"
+
+1525354110 c:\users\alumno\desktop\modelo pp1\productos.h
+
+1525359382 source:c:\users\alumno\desktop\modelo pp1\productos.c
+	<stdio.h>
+	"Productos.h"
+	<string.h>
+
+1525359714 source:c:\users\alumno\desktop\modelo pp1\usuarios.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Usuarios.h"
+

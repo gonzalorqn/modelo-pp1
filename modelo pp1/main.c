@@ -12,8 +12,8 @@ int main()
     eProd_init(listaDeProductos, TAMPRODUCTOS);
     eProd_hardCode(listaDeProductos);
 
-    inicializarUsuariosEstado(listaDeUsuarios,TAMUSUARIOS);
-    inicializarUsuariosHardCode(listaDeUsuarios);
+    eUsu_init(listaDeUsuarios,TAMUSUARIOS);
+    eUsu_hardCode(listaDeUsuarios);
 
     int opcion;
     int index;
@@ -25,6 +25,15 @@ int main()
         switch(opcion)
         {
         case 1:
+            index = eUsu_alta(listaDeUsuarios, TAMUSUARIOS);
+            if(index == -2)
+            {
+                printf("No hay lugar\n");
+            }
+            else
+            {
+                printf("Usuario ingresado\n");
+            }
 
         case 2:
 
@@ -37,7 +46,7 @@ int main()
         case 6:
 
         case 7:
-
+            break;
         }
 
     }

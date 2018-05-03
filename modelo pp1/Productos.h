@@ -11,6 +11,7 @@ typedef struct
 
 int eProd_init(eProductos productos[], int limite);
 void eProd_hardCode(eProductos productos[]);
+
 void mostrarListaSeries(eProductos[], int);
 int buscarLibreProductos(eProductos[], int);
 int cargarSerie(eProductos[], int);

@@ -17,10 +17,10 @@ int eProd_init(eProductos productos[], int limite)
     int retorno = -1;
     int i;
 
-    if(limite > 0 && listado != NULL)
+    if(limite > 0 && productos != NULL)
     {
         retorno = 0;
-        for(i=0; i<cant; i++)
+        for(i=0; i<limite; i++)
         {
             productos[i].estado = 0;
             productos[i].idProducto = 0;
@@ -58,7 +58,7 @@ void mostrarListaProductos(eProductos productos[], int cant)
     {
         if(productos[i].estado == 1)
         {
-            printf("%d %s %s %d\n",productos[i].idProducto, productos[i].nombre, productos[i].genero, productos[i].cantidadTemporadas);
+//            printf("%d %s %s %d\n",productos[i].idProducto, productos[i].nombre, productos[i].genero, productos[i].cantidadTemporadas);
         }
     }
 }
@@ -94,9 +94,9 @@ int cargarProducto(eProductos productos[], int tam)
         gets(productos[index].nombre);
         printf("Ingrese genero: ");
         fflush(stdin);
-        gets(productos[index].genero);
+//        gets(productos[index].genero);
         printf("Ingrese temporadas: ");
-        scanf("%d", &productos[index].cantidadTemporadas);
+//        scanf("%d", &productos[index].cantidadTemporadas);
         productos[index].estado=1;
     }
 
