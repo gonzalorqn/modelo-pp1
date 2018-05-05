@@ -25,7 +25,6 @@ void eUsu_hardCode(eUsuario usuarios[])
     int id[5] = {1,2,3,4,5};
     char nombre[][50]= {"Juan","Maria","Pedro","Vanesa","Jose"};
     char password[][50]= {"asd123","maria123","pedro","vanesa98","jose10"};
-    int idProducto[5] = {1,2,3,4,5};
     int contCalif[5] = {5,2,13,20,0};
     float promCalif[5] = {10,8,7.5,9.3,0};
 
@@ -34,7 +33,6 @@ void eUsu_hardCode(eUsuario usuarios[])
     for(i=0; i<5; i++)
     {
         usuarios[i].idUsuario=id[i];
-        usuarios[i].idProducto=idProducto[i];
         usuarios[i].estado = 1;
         usuarios[i].contCalificaciones = contCalif[i];
         usuarios[i].promCalificaciones = promCalif[i];
@@ -89,8 +87,6 @@ int eUsu_siguienteId(eUsuario usuarios[],int limite)
 int eUsu_alta(eUsuario usuarios[],int limite)
 {
     int retorno = -1;
-    char nombre[50];
-    char password[50];
     int id;
     int indice;
 
@@ -103,18 +99,15 @@ int eUsu_alta(eUsuario usuarios[],int limite)
             retorno = -3;
             id = eUsu_siguienteId(usuarios,limite);
 
-            //if(!getValidString("Nombre?","Error","Overflow", nombre,50,2))
-            //{
-                retorno = 0;
-                printf("Ingrese nombre: ");
-                fflush(stdin);
-                gets(usuarios[indice].nombre);
-                printf("Ingrese password: ");
-                fflush(stdin);
-                gets(usuarios[indice].password);
-                usuarios[indice].idUsuario = id;
-                usuarios[indice].estado = 1;
-            //}
+            retorno = 0;
+            printf("Ingrese nombre: ");
+            fflush(stdin);
+            gets(usuarios[indice].nombre);
+            printf("Ingrese password: ");
+            fflush(stdin);
+            gets(usuarios[indice].password);
+            usuarios[indice].idUsuario = id;
+            usuarios[indice].estado = 1;
         }
     }
     return retorno;
@@ -142,22 +135,21 @@ int eUsu_buscarPorId(eUsuario usuarios[] ,int limite, int id)
 int eUsu_modificacion(eUsuario usuarios[],int limite)
 {
     int retorno = -1;
-    char nombre[50];
-    char password[50];
     int id;
     int indice;
 
     if(limite > 0 && usuarios != NULL)
     {
         retorno = -2;
-        printf("Ingrese ID a modificar: ")
+        eUsu_mostrar(usuarios,limite);
+        printf("Ingrese ID a modificar: ");
         scanf("%d", &id);
 
         indice = eUsu_buscarPorId(usuarios,limite,id);
 
-        if(indice == -2)
+        if(indice == -2 || indice == -1)
         {
-            printf("ID incorrecto");
+
         }
 
         else
@@ -176,14 +168,173 @@ int eUsu_modificacion(eUsuario usuarios[],int limite)
     return retorno;
 }
 
-void mostrarListaUsuarios(eUsuario usuarios[], int cant)
+int eUsu_baja(eUsuario usuarios[],eProductos productos[],int limiteUsu,int limiteProd)
+{
+    int retorno = -1;
+    int id;
+    int indice;
+    int i;
+
+    if(limiteUsu > 0 && usuarios != NULL && limiteProd > 0 && productos != NULL)
+    {
+        retorno = -2;
+        eUsu_mostrar(usuarios,limiteUsu);
+        printf("Ingrese ID a dar de baja: ");
+        scanf("%d", &id);
+
+        indice = eUsu_buscarPorId(usuarios,limiteUsu,id);
+
+        if(indice == -2 || indice == -1)
+        {
+
+        }
+
+        else
+        {
+            retorno = 0;
+            usuarios[indice].estado = 0;
+
+            for(i=0;i<limiteProd;i++)
+            {
+                if(productos[i].idUsuario == usuarios[indice].idUsuario)
+                {
+                    productos[i].estado = 0;
+                }
+            }
+
+        }
+    }
+    return retorno;
+}
+
+void eUsu_mostrarUno(eUsuario usuarios)
+{
+    printf("%d %s\n",usuarios.idUsuario, usuarios.nombre);
+}
+
+void eUsu_mostrar(eUsuario usuarios[], int cant)
 {
     int i;
     for(i=0;i<cant;i++)
     {
         if(usuarios[i].estado == 1)
         {
-//            printf("%d %s %d\n",usuarios[i].idUsuario, usuarios[i].nombre, usuarios[i].idSerie);
+            eUsu_mostrarUno(usuarios[i]);
+        }
+    }
+}
+
+
+int eProd_alta(eProductos productos[], eUsuario usuarios[],int limiteProd, int limiteUsu)
+{
+    int retorno = -1;
+    int id;
+    int idUsu;
+    int indice;
+    int i;
+
+    if(limiteProd > 0 && productos != NULL && limiteUsu > 0 && usuarios != NULL)
+    {
+        retorno = -2;
+        indice = eProd_buscarLugarLibre(productos,limiteProd);
+        if(indice >= 0)
+        {
+            retorno = -3;
+            id = eProd_siguienteId(productos,limiteProd);
+
+            eUsu_mostrar(usuarios,limiteUsu);
+            printf("Ingrese ID usuario: ");
+            scanf("%d", &idUsu);
+            for(i=0;i<limiteUsu;i++)
+            {
+                if(idUsu == usuarios[i].idUsuario && usuarios[i].estado == 1)
+                {
+                    retorno = 0;
+                    printf("Ingrese nombre de producto: ");
+                    fflush(stdin);
+                    gets(productos[indice].nombre);
+                    printf("Ingrese precio: ");
+                    scanf("%f", &productos[indice].precio);
+                    printf("Ingrese stock: ");
+                    scanf("%d", &productos[indice].stock);
+                    productos[indice].idProducto = id;
+                    productos[indice].estado = 1;
+                    productos[indice].idUsuario = idUsu;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+int eProd_modificacion(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu)
+{
+    int retorno = -1;
+    int id;
+    int idProd;
+    int indice;
+
+    if(limiteUsu > 0 && usuarios != NULL && limiteProd > 0 && productos != NULL)
+    {
+        retorno = -2;
+        eUsu_mostrar(usuarios,limiteUsu);
+        printf("Ingrese ID de usuario: ");
+        scanf("%d", &id);
+
+        indice = eUsu_buscarPorId(usuarios,limiteUsu,id);
+
+        if(indice == -2 || indice == -1)
+        {
+
+        }
+
+        else
+        {
+            retorno = -3;
+            eUsu_mostrarUsuarioConSusProductos(productos,limiteProd,usuarios,limiteUsu,id);
+            printf("Ingrese ID de producto: ");
+            scanf("%d", &idProd);
+
+            indice = eProd_buscarPorId(productos,limiteProd,idProd);
+
+            if(indice == -2 || indice == -1 || productos[indice].idUsuario != id)
+            {
+
+            }
+
+            else
+            {
+                retorno = 0;
+                printf("Ingrese nuevo precio: ");
+                scanf("%f", &productos[indice].precio);
+                printf("Ingrese stock: ");
+                scanf("%d", &productos[indice].stock);
+                productos[indice].estado = 1;
+            }
+
+        }
+    }
+    return retorno;
+}
+
+void eUsu_mostrarUsuarioConSusProductos(eProductos productos[], int limiteProd, eUsuario usuarios[], int limiteUsu,int idUsu)
+{
+    int i;
+    int j;
+    for(i=0;i<limiteUsu;i++)
+    {
+        if(usuarios[i].estado == 1 && usuarios[i].idUsuario == idUsu)
+        {
+            printf("%s:\n",usuarios[i].nombre);
+            for(j=0;j<limiteProd;j++)
+            {
+                if(usuarios[i].idUsuario == productos[j].idUsuario && productos[j].estado == 1)
+                {
+                    printf("%d - %s - %.2f - %d - %d\n",productos[j].idProducto,productos[j].nombre,productos[j].precio,productos[j].cantidadVendida,productos[j].stock);
+                }
+            }
+            printf("\n");
+
         }
     }
 }
@@ -233,36 +384,3 @@ void mostrarSerieConSusUsuarios(eProductos series[], int cantSeries, eUsuario us
     }
 }
 
-
-
-int buscarIntUsuarios(eUsuario usuarios[], int tam, int cual)
-{
-    int indice = -1;
-    int i;
-    for(i=0; i<tam; i++)
-    {
-        if(usuarios[i].idUsuario==cual)
-        {
-            indice = i;
-            break;
-        }
-    }
-    return indice;
-}
-
-int bajaUsuario(eUsuario usuarios[], int tam)
-{
-    int numeroUsuario;
-    int index = -1;
-
-    printf("Ingrese usuario a dar de baja: ");
-    scanf("%d", &numeroUsuario);
-
-    index = buscarIntUsuarios(usuarios,tam,numeroUsuario);
-
-    if(index!=-1)
-    {
-        usuarios[index].estado = 0;
-    }
-    return index;
-}

@@ -26,26 +26,77 @@ int main()
         {
         case 1:
             index = eUsu_alta(listaDeUsuarios, TAMUSUARIOS);
-            if(index == -2)
+            if(index == 0)
             {
-                printf("No hay lugar\n");
+                printf("Usuario ingresado\n\n");
             }
             else
             {
-                printf("Usuario ingresado\n");
+                printf("No hay lugar\n\n");
             }
+            break;
 
         case 2:
+            index = eUsu_modificacion(listaDeUsuarios, TAMUSUARIOS);
+            if(index == 0)
+            {
+                printf("Usuario modificado\n\n");
+            }
+            else
+            {
+                printf("ID incorrecto\n\n");
+            }
+            break;
 
         case 3:
+            index = eUsu_baja(listaDeUsuarios, listaDeProductos, TAMUSUARIOS, TAMPRODUCTOS);
+            if(index == 0)
+            {
+                printf("Usuario dado de baja\n\n");
+            }
+            else
+            {
+                printf("ID incorrecto\n\n");
+            }
+            break;
 
         case 4:
+            index = eProd_alta(listaDeProductos, listaDeUsuarios, TAMPRODUCTOS, TAMUSUARIOS);
+            if(index == 0)
+            {
+                printf("Producto ingresado\n\n");
+            }
+            else if(index == -3)
+            {
+                printf("ID incorrecto\n\n");
+            }
+            else
+            {
+                printf("No hay lugar\n\n");
+            }
+            break;
 
         case 5:
+            index = eProd_modificacion(listaDeProductos,listaDeUsuarios,TAMPRODUCTOS,TAMUSUARIOS);
+            if(index == 0)
+            {
+                printf("Producto modificado\n\n");
+            }
+            else if(index == -3)
+            {
+                printf("ID de producto incorrecto\n\n");
+            }
+            else
+            {
+                printf("ID de usuario incorrecto\n\n");
+            }
+            break;
 
         case 6:
 
-        case 7:
+        case 7: //pedir calif
+                //prom = ((prom * cont) + calif) / (cont + 1)
+                //cont++
             break;
         }
 
