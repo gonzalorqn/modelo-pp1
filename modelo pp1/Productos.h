@@ -15,6 +15,3 @@ void eProd_hardCode(eProductos productos[]);
 int eProd_buscarLugarLibre(eProductos productos[],int limite);
 int eProd_siguienteId(eProductos productos[],int limite);
 int eProd_buscarPorId(eProductos productos[] ,int limite, int id);
-
-void mostrarListaSeries(eProductos[], int);
-int bajaSerie(eProductos[], int);

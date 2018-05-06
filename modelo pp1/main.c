@@ -93,10 +93,55 @@ int main()
             break;
 
         case 6:
+            index = eProd_baja(listaDeProductos,listaDeUsuarios,TAMPRODUCTOS,TAMUSUARIOS);
+            if(index == 0)
+            {
+                printf("Producto dado de baja\n\n");
+            }
+            else if(index == -3)
+            {
+                printf("ID de producto incorrecto\n\n");
+            }
+            else
+            {
+                printf("ID de usuario incorrecto\n\n");
+            }
+            break;
 
-        case 7: //pedir calif
-                //prom = ((prom * cont) + calif) / (cont + 1)
-                //cont++
+        case 7:
+            index = eProd_compra(listaDeProductos,listaDeUsuarios,TAMPRODUCTOS,TAMUSUARIOS);
+            if(index == 0)
+            {
+                printf("Producto comprado\n\n");
+            }
+            else if(index == -3)
+            {
+                printf("No hay stock\n\n");
+            }
+            else
+            {
+                printf("ID de producto incorrecto\n\n");
+            }
+            break;
+
+        case 8:
+            index = eUsu_listarPublicaciones(listaDeProductos,listaDeUsuarios,TAMPRODUCTOS,TAMUSUARIOS);
+            if(index == 0)
+            {
+
+            }
+            else
+            {
+                printf("ID de usuario incorrecto\n\n");
+            }
+            break;
+
+        case 9:
+            eProd_listarProductos(listaDeProductos,TAMPRODUCTOS,listaDeUsuarios,TAMUSUARIOS);
+            break;
+
+        case 10:
+            eUsu_listarUsuarios(listaDeUsuarios,TAMUSUARIOS);
             break;
         }
 

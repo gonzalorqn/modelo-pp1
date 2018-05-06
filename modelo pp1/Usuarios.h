@@ -24,6 +24,10 @@ void eUsu_mostrar(eUsuario usuarios[], int cant);
 int eProd_alta(eProductos productos[], eUsuario usuarios[],int limiteProd, int limiteUsu);
 int eProd_modificacion(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu);
 void eUsu_mostrarUsuarioConSusProductos(eProductos productos[], int limiteProd, eUsuario usuarios[], int limiteUsu,int idUsu);
-
-void mostrarUsuarioConSuSerie(eUsuario[], int, eProductos[], int);
-void mostrarSerieConSusUsuarios(eProductos[], int, eUsuario[], int);
+int eProd_baja(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu);
+int eProd_compra(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu);
+int eUsu_calificacion(eUsuario usuarios[],int limite,int cual);
+int eUsu_listarPublicaciones(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu);
+void eProd_listarProductos(eProductos productos[], int limiteProd, eUsuario usuarios[], int limiteUsu);
+void eUsu_listarUsuarios(eUsuario usuarios[],int cant);
+void eUsu_mostrarUnoConCalificacion(eUsuario usuarios);

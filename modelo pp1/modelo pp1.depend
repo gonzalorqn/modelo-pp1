@@ -20,22 +20,22 @@
 	<string.h>
 	"Usuarios.h"
 
-1525553371 source:c:\users\gonzalo\desktop\modelo pp1\main.c
+1525568828 source:c:\users\gonzalo\desktop\modelo pp1\main.c
 	<stdio.h>
 	<stdlib.h>
 	"Usuarios.h"
 
-1525552774 c:\users\gonzalo\desktop\modelo pp1\usuarios.h
+1525568780 c:\users\gonzalo\desktop\modelo pp1\usuarios.h
 	"Productos.h"
 
-1525552909 c:\users\gonzalo\desktop\modelo pp1\productos.h
+1525567675 c:\users\gonzalo\desktop\modelo pp1\productos.h
 
-1525552895 source:c:\users\gonzalo\desktop\modelo pp1\productos.c
+1525568324 source:c:\users\gonzalo\desktop\modelo pp1\productos.c
 	<stdio.h>
 	"Productos.h"
 	<string.h>
 
-1525553837 source:c:\users\gonzalo\desktop\modelo pp1\usuarios.c
+1525568780 source:c:\users\gonzalo\desktop\modelo pp1\usuarios.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

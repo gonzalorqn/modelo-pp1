@@ -339,48 +339,178 @@ void eUsu_mostrarUsuarioConSusProductos(eProductos productos[], int limiteProd, 
     }
 }
 
-void mostrarUsuarioConSuSerie(eUsuario usuarios[], int cantUsuarios, eProductos productos[], int cantSeries)
+int eProd_baja(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu)
+{
+    int retorno = -1;
+    int id;
+    int idProd;
+    int indice;
+
+    if(limiteUsu > 0 && usuarios != NULL && limiteProd > 0 && productos != NULL)
+    {
+        retorno = -2;
+        eUsu_mostrar(usuarios,limiteUsu);
+        printf("Ingrese ID de usuario: ");
+        scanf("%d", &id);
+
+        indice = eUsu_buscarPorId(usuarios,limiteUsu,id);
+
+        if(indice == -2 || indice == -1)
+        {
+
+        }
+
+        else
+        {
+            retorno = -3;
+            eUsu_mostrarUsuarioConSusProductos(productos,limiteProd,usuarios,limiteUsu,id);
+            printf("Ingrese ID de producto: ");
+            scanf("%d", &idProd);
+
+            indice = eProd_buscarPorId(productos,limiteProd,idProd);
+
+            if(indice == -2 || indice == -1 || productos[indice].idUsuario != id)
+            {
+
+            }
+
+            else
+            {
+                retorno = 0;
+                productos[indice].estado = 0;
+            }
+
+        }
+    }
+    return retorno;
+}
+
+int eProd_compra(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu)
+{
+    int retorno = -1;
+    int id;
+    int indice;
+    int indiceUsu;
+    int calif;
+
+    if(limiteUsu > 0 && usuarios != NULL && limiteProd > 0 && productos != NULL)
+    {
+        retorno = -2;
+        printf("Ingrese ID de producto: ");
+        scanf("%d", &id);
+
+        indice = eProd_buscarPorId(productos,limiteProd,id);
+
+        if(indice == -2 || indice == -1)
+        {
+
+        }
+        else if(productos[indice].stock == 0)
+        {
+            retorno = -3;
+        }
+        else
+        {
+            retorno = 0;
+            productos[indice].stock--;
+            productos[indice].cantidadVendida++;
+            indiceUsu = eUsu_buscarPorId(usuarios,limiteUsu,productos[indice].idUsuario);
+            calif = eUsu_calificacion(usuarios,limiteUsu,indiceUsu);
+        }
+
+    }
+
+    return retorno;
+}
+
+int eUsu_calificacion(eUsuario usuarios[],int limite,int cual)
+{
+    int retorno = -1;
+    int calif;
+    if(limite > 0 && usuarios != NULL)
+    {
+        retorno = 0;
+        do
+        {
+            printf("Ingrese calificacion del vendedor: ");
+            scanf("%d", &calif);
+        }while(calif < 1 || calif > 10);
+        usuarios[cual].promCalificaciones = ((usuarios[cual].promCalificaciones * usuarios[cual].contCalificaciones) + calif) / (usuarios[cual].contCalificaciones + 1);
+        usuarios[cual].contCalificaciones++;
+    }
+    return retorno;
+}
+
+int eUsu_listarPublicaciones(eProductos productos[],eUsuario usuarios[],int limiteProd,int limiteUsu)
+{
+    int retorno = -1;
+    int id;
+    int idProd;
+    int indice;
+
+    if(limiteUsu > 0 && usuarios != NULL && limiteProd > 0 && productos != NULL)
+    {
+        retorno = -2;
+        eUsu_mostrar(usuarios,limiteUsu);
+        printf("Ingrese ID de usuario: ");
+        scanf("%d", &id);
+
+        indice = eUsu_buscarPorId(usuarios,limiteUsu,id);
+
+        if(indice == -2 || indice == -1)
+        {
+
+        }
+
+        else
+        {
+            retorno = 0;
+            eUsu_mostrarUsuarioConSusProductos(productos,limiteProd,usuarios,limiteUsu,id);
+        }
+    }
+
+    return retorno;
+}
+
+void eProd_listarProductos(eProductos productos[], int limiteProd, eUsuario usuarios[], int limiteUsu)
 {
     int i;
     int j;
-    for(i=0;i<cantUsuarios;i++)
+
+    for(j=0;j<limiteProd;j++)
+    {
+        if(productos[j].estado == 1)
+        {
+            printf("%d - %s - %.2f - %d - %d - ",productos[j].idProducto,productos[j].nombre,productos[j].precio,productos[j].cantidadVendida,productos[j].stock);
+
+            for(i=0;i<limiteUsu;i++)
+            {
+                if(usuarios[i].estado == 1 && usuarios[i].idUsuario == productos[j].idUsuario)
+                {
+                    printf("%s\n",usuarios[i].nombre);
+                }
+            }
+        }
+
+    }
+    printf("\n");
+}
+
+void eUsu_listarUsuarios(eUsuario usuarios[],int cant)
+{
+    int i;
+    for(i=0;i<cant;i++)
     {
         if(usuarios[i].estado == 1)
         {
-            printf("%s ", usuarios[i].nombre);
-            for(j=0;j<cantSeries;j++)
-            {
-//                if(series[j].idSerie == usuarios[i].idSerie && series[j].estado == 1)
-                {
-//                    printf("%s", series[j].nombre);
-                    break;
-                }
-            }
-            printf("\n");
-
+            eUsu_mostrarUnoConCalificacion(usuarios[i]);
         }
     }
+    printf("\n");
 }
 
-void mostrarSerieConSusUsuarios(eProductos series[], int cantSeries, eUsuario usuarios[], int cantUsuarios)
+void eUsu_mostrarUnoConCalificacion(eUsuario usuarios)
 {
-    int i;
-    int j;
-    for(i=0;i<cantSeries;i++)
-    {
-        if(series[i].estado == 1)
-        {
-            printf("%s ",series[i].nombre);
-            for(j=0;j<cantUsuarios;j++)
-            {
-//                if(series[i].idSerie == usuarios[j].idSerie && usuarios[j].estado == 1)
-                {
-                    printf("%s ",usuarios[j].nombre);
-                }
-            }
-            printf("\n");
-
-        }
-    }
+    printf("%s - %.2f\n",usuarios.nombre,usuarios.promCalificaciones);
 }
 
